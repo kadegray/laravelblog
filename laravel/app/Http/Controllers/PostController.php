@@ -80,7 +80,9 @@ class PostController extends Controller
 
         $newPost = Post::create($postData);
 
-        return redirect('post');
+        return redirect(route('post.single', [
+            'post' => $newPost->id
+        ]));
     }
 
     /**
