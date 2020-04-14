@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/post');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/post', 'PostController');
+Route::get('/post', 'PostController@index')->name('post');
+Route::get('/post/create', 'PostController@create')->name('create_post');
+Route::get('/post/edit', 'PostController@edit')->name('create_put');

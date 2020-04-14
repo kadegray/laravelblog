@@ -31,10 +31,13 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
+
+                    <a class="btn btn-primary"  href="{{ route('create_post') }}">New Post</a>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
