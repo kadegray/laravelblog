@@ -21,7 +21,10 @@ COPY ./php-xdebug.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-xdebug.ini
 
 WORKDIR $APP_HOME
 
-# change ownership of our applications
-RUN chown -R www-data:www-data $APP_HOME
+COPY entrypoint.sh /usr/bin/entrypoint
+RUN chown www-data:www-data /usr/bin/entrypoint
+RUN chmod 775 /usr/bin/entrypoint
+CMD ["entrypoint"]
 
 EXPOSE 80
+CMD ["/start.sh"]

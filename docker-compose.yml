@@ -14,11 +14,9 @@ services:
       - database
     environment:
       - DB_HOST=database
+      - DB_DATABASE=laravelblog
       - DB_USERNAME=root
       - DB_PASSWORD=root
-      - DB_NAME=laravelblog
-      - DB_PORT=3306
-      - PHP_VERSION=7.3
 
   database:
     image: mysql:5.7
