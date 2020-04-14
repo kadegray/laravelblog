@@ -37,7 +37,7 @@
 
                     </ul>
 
-                    <a class="btn btn-primary"  href="{{ route('create_post') }}">New Post</a>
+                    <a class="btn btn-primary"  href="{{ route('post.create') }}">New Post</a>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

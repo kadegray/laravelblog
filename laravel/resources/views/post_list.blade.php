@@ -10,7 +10,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->name }}</h5>
                             <p class="card-text">{{ $post->description }}</p>
-                            <a href="#" class="btn btn-primary">Read</a>
+                            <a class="btn btn-primary" href="{{ route('post.single', ['post' => $post->id]) }}">Read</a>
                         </div>
                     </div>
                 @endforeach

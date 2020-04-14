@@ -67,7 +67,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('post');
+        $post = Post::find($id);
+
+        return view('post_single', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -78,7 +82,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        return view('post_edit');
+        $post = Post::find($id);
+        if (!$post) {
+            return response(null, 404);
+        }
+
+        return view('post_edit', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -90,7 +101,23 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, $id)
     {
-        return view('post_edit');
+        $post = Post::find($id);
+        if (!$post) {
+            return response(null, 404);
+        }
+
+        $putData = $request->only([
+            'name',
+            'description',
+            'body',
+        ]);
+
+        $post->fill($putData);
+        $post->save();
+
+        return redirect(route('post.single', [
+            'post' => $id
+        ]));
     }
 
     /**

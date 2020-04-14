@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('/post', 'PostController');
-Route::get('/post', 'PostController@index')->name('post');
-Route::get('/post/create', 'PostController@create')->name('create_post');
-Route::get('/post/edit', 'PostController@edit')->name('create_put');
+Route::resource('/post', 'PostController')->names([
+    'index' => 'post',
+    'show' => 'post.single',
+]);
