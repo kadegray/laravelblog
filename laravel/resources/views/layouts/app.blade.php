@@ -37,7 +37,10 @@
 
                     </ul>
 
+
+                    @can('create', \App\Post::class)
                     <a class="btn btn-primary"  href="{{ route('post.create') }}">New Post</a>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

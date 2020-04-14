@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Throwable;
 
 class PostController extends Controller
@@ -12,7 +13,10 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except([
+            'index',
+            'show'
+        ]);
     }
 
     /**
@@ -22,7 +26,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('user:id,name')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('post_list', [
             'posts' => $posts
@@ -36,6 +42,15 @@ class PostController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        if (!$user) {
+            return response(null, 401);
+        }
+
+        if (!$user->can('create', Post::class)) {
+            return response(null, 401);
+        }
+
         return view('post_create');
     }
 
@@ -47,6 +62,15 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $user = Auth::user();
+        if (!$user) {
+            return response(null, 401);
+        }
+
+        if (!$user->can('create', Post::class)) {
+            return response(null, 401);
+        }
+
         $postData = $request->only([
             'name',
             'description',
@@ -87,6 +111,8 @@ class PostController extends Controller
             return response(null, 404);
         }
 
+        $this->authorize('update', $post);
+
         return view('post_edit', [
             'post' => $post
         ]);
@@ -105,6 +131,8 @@ class PostController extends Controller
         if (!$post) {
             return response(null, 404);
         }
+
+        $this->authorize('update', $post);
 
         $putData = $request->only([
             'name',
@@ -128,6 +156,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        $post = Post::find($id);
+        $this->authorize('delete', $post);
+
         Post::destroy($id);
 
         return redirect('post');
