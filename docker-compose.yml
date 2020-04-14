@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+
+  laravel:
+    build:
+        context: ./
+        dockerfile: dev.Dockerfile
+    volumes:
+      - laravel_sync:/var/www/html:nocopy
+    ports:
+      - "1000:80"
+    links:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=laravelblog
+      - DB_PORT=3306
+      - PHP_VERSION=7.3
+
+  database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravelblog
+    ports:
+      - "33061:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  laravel_sync:
+    external: true
+  mysql_data:
+    driver: local

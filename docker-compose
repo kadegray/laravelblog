@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ $# -gt 0 ]; then
+    if [ "$1" != "start" ] && [ "$1" != "clean" ]; then
+        docker-compose "$@"
+    else
+        docker-sync-stack "$@"
+    fi
+else
+    docker-sync-stack start
+fi

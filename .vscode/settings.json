@@ -1,0 +1,11 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "php-cs-fixer.config": "laravel/config.php_cs",
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "files.trimTrailingWhitespace": true,
+    "eslint.enable": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
+}
