@@ -16,8 +16,8 @@ COPY php.ini /usr/local/etc/php/conf.d/
 RUN curl --silent --show-error https://getcomposer.org/installer | php
 
 # php configuration
-COPY ./php-xdebug.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-xdebug.ini
-COPY ./php-xdebug.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-xdebug.ini
+COPY ./php-xdebug.ini /etc/php/7.2/fpm/conf.d/20-xdebug.ini
+COPY ./php-xdebug.ini /etc/php/7.2/cli/conf.d/20-xdebug.ini
 
 WORKDIR $APP_HOME
 
@@ -26,5 +26,6 @@ RUN chown www-data:www-data /usr/bin/entrypoint
 RUN chmod 775 /usr/bin/entrypoint
 CMD ["entrypoint"]
 
+EXPOSE 9000
 EXPOSE 80
 CMD ["/start.sh"]

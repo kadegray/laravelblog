@@ -10,6 +10,7 @@ services:
       - laravel_sync:/var/www/html:nocopy
     ports:
       - "1000:80"
+      - "9000"
     links:
       - database
     environment:
