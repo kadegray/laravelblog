@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">Edit Post</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('post.update', ['post' => $post->id]) }}">
+                    <form method="POST" action="{{ route('post.update', ['post' => $post->id]) }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="_method" value="put" />
 

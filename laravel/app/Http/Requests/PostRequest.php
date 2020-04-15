@@ -24,11 +24,10 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'integer|exists:App\User,id',
-            'name' => 'string|max:255',
-            'description' => 'string|required',
-            'body' => 'string|required',
-            'image' => 'image',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'body' => 'required|string',
+            'image' => 'sometimes|image',
         ];
     }
 }
