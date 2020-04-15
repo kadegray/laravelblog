@@ -6,8 +6,8 @@ services:
     build:
         context: ./
         dockerfile: Dockerfile
-    volumes:
-      - laravel_sync:/var/www/html:nocopy
+    # volumes:
+    #   - laravel_sync:/var/www/html:nocopy
     ports:
       - "1000:80"
     links:
@@ -29,7 +29,7 @@ services:
       - mysql_data:/var/lib/mysql
 
 volumes:
-  laravel_sync:
-    external: true
+  # laravel_sync:
+  #   external: true
   mysql_data:
     driver: local

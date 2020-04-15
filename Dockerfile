@@ -1,6 +1,7 @@
 FROM wyveo/nginx-php-fpm:php72
 
 COPY laravel /var/www/html
+COPY laravel/.env.prod /var/www/html/.env
 ENV APP_HOME /var/www/html
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -20,7 +21,9 @@ RUN composer install
 RUN apt-get install -y npm
 RUN npm i -g npm@latest
 
-# change ownership of our applications
-RUN chown -R www-data:www-data $APP_HOME
+COPY entrypoint.sh /usr/bin/entrypoint
+RUN chown www-data:www-data /usr/bin/entrypoint
+RUN chmod 777 /usr/bin/entrypoint
+CMD ["entrypoint"]
 
 EXPOSE 80
