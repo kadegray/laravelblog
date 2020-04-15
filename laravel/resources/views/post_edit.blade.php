@@ -10,6 +10,14 @@
                     <form method="POST" action="{{ route('post.update', ['post' => $post->id]) }}">
                         @csrf
                         <input type="hidden" name="_method" value="put" />
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Header Image') }}</label>
+                            <div class="col-md-6">
+                                <img src="/post/{{ $post->id }}/image" width="100%"/>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
                             <div class="col-md-6">
@@ -49,6 +57,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Change Header Image') }}</label>
+                            <div class="col-md-6">
+                                <input id="image" name="image" type="file" class="@error('image') is-invalid @enderror" class="form-control-file">
+
+                                @error('image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        @can('update', $post)
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -56,8 +78,19 @@
                                 </button>
                             </div>
                         </div>
+                        @endif
 
                     </form>
+
+                    @can('delete', $post)
+                    <form method="POST" action="{{ route('post.destroy', ['post' => $post->id]) }}">
+                        @csrf
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger float-right">
+                            {{ __('Delete') }}
+                        </button>
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>

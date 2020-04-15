@@ -23,3 +23,4 @@ Route::resource('/post', 'PostController')->names([
     'index' => 'post',
     'show' => 'post.single',
 ]);
+Route::get('/post/{post}/image', 'PostController@downloadHeaderImage')->name('post.headerImage');

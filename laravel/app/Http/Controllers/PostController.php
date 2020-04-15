@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class PostController extends Controller
@@ -80,6 +80,12 @@ class PostController extends Controller
 
         $newPost = Post::create($postData);
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->image->store('public');
+            data_set($newPost, 'header_image', $imagePath);
+            $newPost->save();
+        }
+
         return redirect(route('post.single', [
             'post' => $newPost->id
         ]));
@@ -145,6 +151,12 @@ class PostController extends Controller
         $post->fill($putData);
         $post->save();
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->image->store('public');
+            data_set($post, 'header_image', $imagePath);
+            $post->save();
+        }
+
         return redirect(route('post.single', [
             'post' => $id
         ]));
@@ -161,8 +173,16 @@ class PostController extends Controller
         $post = Post::find($id);
         $this->authorize('delete', $post);
 
+        Storage::delete(storage_path('app/') . $post->header_image);
         Post::destroy($id);
 
         return redirect('post');
+    }
+
+    public function downloadHeaderImage($id)
+    {
+        $post = Post::find($id);
+
+        return response()->download(storage_path('app/') . $post->header_image, 'header_image.jpeg');
     }
 }

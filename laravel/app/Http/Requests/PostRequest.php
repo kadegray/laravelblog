@@ -28,6 +28,7 @@ class PostRequest extends FormRequest
             'name' => 'string|max:255',
             'description' => 'string|required',
             'body' => 'string|required',
+            'image' => 'image',
         ];
     }
 }
