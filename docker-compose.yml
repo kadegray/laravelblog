@@ -12,6 +12,8 @@ services:
       - "1000:80"
     links:
       - database
+    depends_on:
+      - database
     environment:
       - DB_HOST=database
       - DB_DATABASE=laravelblog
